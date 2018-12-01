@@ -6,4 +6,7 @@
   "bin": {
     "gray-matter-lumber": "index.js"
   },
+  "dependencies": {
+    "luhn": "^2.3.0"
+  }
 }
