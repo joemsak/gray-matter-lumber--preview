@@ -2,5 +2,11 @@
   "name": "gray-matter-lumber",
   "version": "1.0.0",
   "main": "index.js",
-  "license": "MIT"
+  "license": "MIT",
+  "bin": {
+    "gray-matter-lumber": "index.js"
+  },
+  "dependencies": {
+    "commander": "^2.19.0"
+  }
 }
