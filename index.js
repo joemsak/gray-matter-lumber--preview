@@ -3,6 +3,7 @@
 'use strict'
 
 const Card = require('./models/card')
+const Report = require('./models/report')
 
 let cardHolders = {}
 
@@ -17,6 +18,10 @@ const promptForCommand = () => {
   readline.question(`Enter a command:\n`, (input) => {
     if (input === 'quit') {
       readline.close()
+
+      const report = new Report(cardHolders)
+      report.printSummary()
+
       process.exit()
     }
 
@@ -44,12 +49,10 @@ const promptForCommand = () => {
 
       case "Charge":
         card.attemptCharge(sanitizedChargeAmount)
-        console.log(card.getBalanceAsString())
         break
 
       case "Credit":
         card.attemptCredit(sanitizedCreditAmount)
-        console.log(card.getBalanceAsString())
         break
 
       default:
