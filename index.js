@@ -2,41 +2,9 @@
 
 'use strict'
 
+const Card = require('./models/card')
+
 let cardHolders = {}
-
-class Card {
-  constructor(number, limit) {
-    this.number = number
-    this.limit = limit
-    this.credits = []
-    this.charges = []
-  }
-
-  getBalance () {
-    return this.sumCharges() - this.sumCredits()
-  }
-
-  getBalanceAsString () {
-    return `$${this.getBalance()}`
-  }
-
-  sumCharges () {
-    return this.charges.reduce((acc, i) => acc += i, 0)
-  }
-
-  sumCredits () {
-    return this.credits.reduce((acc, i) => acc += i, 0)
-  }
-
-  attemptCharge (amount) {
-    if (this.getBalance() + amount <= this.limit)
-      this.charges.push(amount)
-  }
-
-  attemptCredit (amount) {
-    this.credits.push(amount)
-  }
-}
 
 const readline = require('readline').createInterface({
   input: process.stdin,
