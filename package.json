@@ -6,7 +6,4 @@
   "bin": {
     "gray-matter-lumber": "index.js"
   },
-  "dependencies": {
-    "commander": "^2.19.0"
-  }
 }
