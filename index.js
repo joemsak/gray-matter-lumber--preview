@@ -2,8 +2,10 @@
 
 'use strict'
 
-const Card = require('./models/card')
 const Report = require('./models/report')
+
+const tokenizeCommand = require('./utils/tokenize-command')
+const processTokens = require('./utils/process-tokens')
 
 let cardHolders = {}
 
@@ -25,39 +27,9 @@ const promptForCommand = () => {
       process.exit()
     }
 
-    const tokens = input.split(" ")
+    const tokens = tokenizeCommand(input)
 
-    const command = tokens[0]
-
-    const name = tokens[1]
-    const cardNumber = command === "Add" ? tokens[2] : ""
-
-    const limit = cardNumber.length ? tokens[3] : ""
-    const sanitizedLimit = parseInt(limit.replace("$", ""))
-
-    const chargeAmount = command === "Charge" ? tokens[2] : ""
-    const creditAmount = command === "Credit" ? tokens[2] : ""
-    const sanitizedChargeAmount = parseInt(chargeAmount.replace("$", ""))
-    const sanitizedCreditAmount = parseInt(creditAmount.replace("$", ""))
-
-    const card = cardHolders[name]
-
-    switch(command) {
-      case "Add":
-        cardHolders[name] = new Card(cardNumber, sanitizedLimit)
-        break
-
-      case "Charge":
-        card.attemptCharge(sanitizedChargeAmount)
-        break
-
-      case "Credit":
-        card.attemptCredit(sanitizedCreditAmount)
-        break
-
-      default:
-        console.log(`Command ${command} not supported`)
-    }
+    processTokens(tokens, cardHolders)
 
     promptForCommand()
   })
